@@ -75,6 +75,13 @@
         "type": "bytes32"
       }
     ],
+    "name": "TimerSet",
+    "type": "event"
+  },
+  {
+    "inputs": [{ "internalType": "bytes32", "name": "_taskId", "type": "bytes32" }],
+    "name": "cancelTask",
+    "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
@@ -85,43 +92,55 @@
         "name": "_taskCreator",
         "type": "address"
       },
+      { "internalType": "bytes", "name": "_resolverData", "type": "bytes" }
+    ],
+    "name": "createTask",
+    "outputs": [{ "internalType": "bytes32", "name": "task", "type": "bytes32" }],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "_execAddress", "type": "address" },
+      { "internalType": "bytes4", "name": "_execSelector", "type": "bytes4" },
       {
         "internalType": "address",
         "name": "_execAddress",
         "type": "address"
       },
-      {
-        "internalType": "bytes",
-        "name": "_execData",
-        "type": "bytes"
-      },
-      {
-        "components": [
-          {
-            "internalType": "enum LibDataTypes.Module[]",
-            "name": "modules",
-            "type": "uint8[]"
-          },
-          {
-            "internalType": "bytes[]",
-            "name": "args",
-            "type": "bytes[]"
-          }
-        ],
-        "internalType": "struct LibDataTypes.ModuleData",
-        "name": "_moduleData",
-        "type": "tuple"
-      },
-      {
-        "internalType": "uint256",
-        "name": "_txFee",
-        "type": "uint256"
-      },
+      { "internalType": "bytes", "name": "_resolverData", "type": "bytes" },
+      { "internalType": "address", "name": "_feeToken", "type": "address" }
+    ],
+    "name": "createTaskNoPrepayment",
+    "outputs": [{ "internalType": "bytes32", "name": "task", "type": "bytes32" }],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint128", "name": "_startTime", "type": "uint128" },
+      { "internalType": "uint128", "name": "_interval", "type": "uint128" },
+      { "internalType": "address", "name": "_execAddress", "type": "address" },
+      { "internalType": "bytes4", "name": "_execSelector", "type": "bytes4" },
       {
         "internalType": "address",
         "name": "_feeToken",
         "type": "address"
       },
+      { "internalType": "bytes", "name": "_resolverData", "type": "bytes" },
+      { "internalType": "address", "name": "_feeToken", "type": "address" },
+      { "internalType": "bool", "name": "_useTreasury", "type": "bool" }
+    ],
+    "name": "createTimedTask",
+    "outputs": [{ "internalType": "bytes32", "name": "task", "type": "bytes32" }],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "_txFee", "type": "uint256" },
+      { "internalType": "address", "name": "_feeToken", "type": "address" },
+      { "internalType": "address", "name": "_taskCreator", "type": "address" },
       {
         "internalType": "bool",
         "name": "_useTaskTreasuryFunds",
@@ -186,13 +205,7 @@
   {
     "inputs": [],
     "name": "gelato",
-    "outputs": [
-      {
-        "internalType": "address payable",
-        "name": "",
-        "type": "address"
-      }
-    ],
+    "outputs": [{ "internalType": "address payable", "name": "", "type": "address" }],
     "stateMutability": "view",
     "type": "function"
   },
@@ -310,21 +323,9 @@
     "type": "function"
   },
   {
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_taskCreator",
-        "type": "address"
-      }
-    ],
+    "inputs": [{ "internalType": "address", "name": "_taskCreator", "type": "address" }],
     "name": "getTaskIdsByUser",
-    "outputs": [
-      {
-        "internalType": "bytes32[]",
-        "name": "",
-        "type": "bytes32[]"
-      }
-    ],
+    "outputs": [{ "internalType": "bytes32[]", "name": "", "type": "bytes32[]" }],
     "stateMutability": "view",
     "type": "function"
   },
