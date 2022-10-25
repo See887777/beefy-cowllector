@@ -42,16 +42,14 @@ var __importStar =
   };
 Object.defineProperty(exports, '__esModule', { value: true });
 exports.redisDisconnect = exports.getKey = exports.setKey = void 0;
-require('dotenv/config');
 const REDIS = __importStar(require('redis'));
 let redisClient;
 const initRedis = async () => {
   const client = REDIS.createClient({
     url: process.env.REDISCLOUD_URL || 'redis://localhost:6379',
   });
-  client.on('ready', () => console.log('Redis ready'));
-  client.on('end', () => console.log('Redis closed'));
-  client.on('error', err => console.log('Redis error: ', err));
+  client.on('connect', () => console.log('Connected to redis'));
+  client.on('error', err => console.log('Failed to connect to redis: ', err));
   await client.connect();
   // await loadCachedValues();
   return client;
@@ -79,8 +77,7 @@ const getKey = async key => {
 };
 exports.getKey = getKey;
 async function redisDisconnect() {
-  if (!redisClient) return;
-  if (redisClient instanceof Promise && !(redisClient = await redisClient)) return;
+  if (!redisClient || redisClient instanceof Promise) return;
   await redisClient.quit();
   redisClient = undefined;
 }
